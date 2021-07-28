@@ -8,7 +8,8 @@ import tv.newtv.demo.livedemo.data.bean.ChannelBean
 object ExcelUtil {
     fun getChannelsByAssets(): List<ChannelBean> {
         val channels = ArrayList<ChannelBean>()
-        val workBook = WorkbookFactory.create(LiveDemoApp.appContext.resources.assets.open("channels.xlsx"))
+        val workBook =
+            WorkbookFactory.create(LiveDemoApp.appContext.resources.assets.open("channels.xlsx"))
         val sheet = workBook.getSheetAt(0)
         for (i in 1 until sheet.lastRowNum) {
             val row = sheet.getRow(i)
@@ -18,13 +19,13 @@ object ExcelUtil {
                 cell.setCellType(CellType.STRING)
                 when (j) {
                     0 -> {
-                        channel.name = cell.stringCellValue
+                        channel.name = cell.stringCellValue ?: ""
                     }
                     1 -> {
-                        channel.url = cell.stringCellValue
+                        channel.url = cell.stringCellValue ?: ""
                     }
                     2 -> {
-                        channel.type = cell.stringCellValue
+                        channel.type = cell.stringCellValue ?: "-1"
                     }
                 }
             }

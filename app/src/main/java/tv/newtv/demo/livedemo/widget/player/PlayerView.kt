@@ -8,6 +8,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.Toast
 import kotlinx.android.synthetic.main.view_player.view.*
 import kotlinx.coroutines.*
 import tv.icntv.icntvplayersdk.BasePlayer
@@ -105,6 +106,10 @@ class PlayerView @JvmOverloads constructor(
     }
 
     fun setPlayInfo(liveInfo: ChannelBean) {
+        if (liveInfo.url.isEmpty()) {
+            Toast.makeText(context, "播放信息无效", Toast.LENGTH_LONG).show()
+            return
+        }
         livePlayInfo = liveInfo
         showProgressDialog(-1, null)
         val icntvPlayerInfo = NewTVPlayerInfo()
@@ -119,10 +124,16 @@ class PlayerView @JvmOverloads constructor(
         icntvPlayerInfo.extend = ""
         icntvPlayerInfo.duration = -1
         icntvPlayerInfo.playUrl = liveInfo.url
-        if (liveInfo.type == "1") {
-            icntvPlayerInfo.playType = Constants.PLAY_MODEL_CCTV_DRM_LIVE
-        } else {
-            icntvPlayerInfo.playType = Constants.PLAY_MODEL_LIVE
+        when (liveInfo.type) {
+            "1" -> {
+                icntvPlayerInfo.playType = Constants.PLAY_MODEL_CCTV_DRM_LIVE
+            }
+            "2" -> {
+                icntvPlayerInfo.playType = Constants.PLAY_MODEL_LIVE
+            }
+            "-1" -> {
+                Toast.makeText(context, "播放信息类型错误", Toast.LENGTH_LONG).show()
+            }
         }
         playLive(icntvPlayerInfo)
     }
@@ -143,7 +154,7 @@ class PlayerView @JvmOverloads constructor(
         if (context is MainActivity) {
             (context as MainActivity).let {
                 if (isFirstBufferStart || style == -1) {
-                    it.showProgressDialog(3, livePlayInfo!!.name)
+                    it.showProgressDialog(3, livePlayInfo?.name)
                 } else {
                     it.showProgressDialog(2, null)
                 }
