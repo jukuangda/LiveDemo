@@ -31,6 +31,7 @@ object ExcelUtil {
             }
             channels.add(channel)
         }
+        workBook.close()
         return channels
     }
 }
