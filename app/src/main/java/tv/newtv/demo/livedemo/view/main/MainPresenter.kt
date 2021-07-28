@@ -18,6 +18,7 @@ class MainPresenter(
 
     override fun init() {
         launch {
+            view.showProgressDialog(1, null)
             if (dataSource.initNewTvSdk() == 0) {
                 getChannels()
             }

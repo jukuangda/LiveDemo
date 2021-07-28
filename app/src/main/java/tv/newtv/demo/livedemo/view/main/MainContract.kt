@@ -15,6 +15,10 @@ interface MainContract {
 
         // 网络异常弹框
         fun showFailView()
+
+        fun showProgressDialog(style: Int, dialogTitle: String?)
+
+        fun dismissProgressDialog(): Int
     }
 
     interface Presenter:IPresenter {

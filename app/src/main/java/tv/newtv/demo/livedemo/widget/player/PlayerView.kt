@@ -86,11 +86,11 @@ class PlayerView @JvmOverloads constructor(
 
             override fun onBufferStart(s: String?) {
                 //仅调用后续调用 activity方法
-//                showProgressDialog(0, null)
+                showProgressDialog(0, null)
             }
 
             override fun onBufferEnd(s: String?) {
-//                dismissProgressDialog()
+                dismissProgressDialog()
             }
 
             override fun onError(i: Int, i1: Int, s: String?) {
@@ -106,6 +106,7 @@ class PlayerView @JvmOverloads constructor(
 
     fun setPlayInfo(liveInfo: ChannelBean) {
         livePlayInfo = liveInfo
+        showProgressDialog(-1, null)
         val icntvPlayerInfo = NewTVPlayerInfo()
         icntvPlayerInfo.appKey = "acdfed1385b0f9e7e55575100aec0314"
         icntvPlayerInfo.channeId = "50000238"
@@ -127,9 +128,8 @@ class PlayerView @JvmOverloads constructor(
     }
 
     private fun playLive(icntvPlayerInfo: NewTVPlayerInfo?) {
-        releasePlayer()
         isFirstBufferStart = true
-//        releasePlayer()
+        releasePlayer()
         Log.d(TAG, "set playLive url = " + icntvPlayerInfo!!.playUrl)
         if (!LiveDemoApp.INSTANCE.isBackground) {
             newTVPlayer = NewTvPlayerWrapper.getInstance().getPlayer(

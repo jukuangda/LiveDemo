@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity(), MainContract.View, CoroutineScope by M
 
     }
 
-    fun showProgressDialog(style: Int, dialogTitle: String?) {
+    override fun showProgressDialog(style: Int, dialogTitle: String?) {
         mProgressDialogStyle = style
         when (style) {
             1 -> view_loading?.showOnlyLoading()
@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity(), MainContract.View, CoroutineScope by M
         }
     }
 
-    fun dismissProgressDialog(): Int {
+    override fun dismissProgressDialog(): Int {
         view_loading?.visibility = View.GONE
         return mProgressDialogStyle
     }
