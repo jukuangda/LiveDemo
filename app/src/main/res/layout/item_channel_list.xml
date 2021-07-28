@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/height_100px"
+    android:background="@drawable/item_selector"
+    android:clickable="true"
+    android:focusable="true"
+    tools:ignore="PxUsage,RtlHardcoded">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/viewAnim"
+        android:layout_width="@dimen/width_36px"
+        android:layout_height="@dimen/height_36px"
+        android:layout_marginLeft="@dimen/width_20px"
+        android:layout_marginTop="@dimen/height_32px"
+        app:lottie_fileName="soundbyte-blue.json"
+        app:lottie_loop="true" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textTitle"
+        android:layout_width="@dimen/width_252px"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/width_60px"
+        android:layout_marginTop="@dimen/height_24px"
+        android:layout_marginRight="@dimen/width_35px"
+        android:layout_marginBottom="@dimen/height_24px"
+        android:ellipsize="marquee"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/height_36px" />
+
+</FrameLayout>

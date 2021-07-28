@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="HardcodedText,PxUsage,RtlHardcoded">
+
+    <TextView
+        android:id="@+id/viewTitle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_262px"
+        android:layout_marginTop="@dimen/height_725px"
+        android:background="@drawable/program_title_bg"
+        android:gravity="center"
+        android:textColor="#FFFFFF"
+        android:textSize="@dimen/height_50px"
+        android:visibility="gone" />
+</merge>

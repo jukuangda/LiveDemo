@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/viewRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".view.main.MainActivity">
+
+    <tv.newtv.demo.livedemo.widget.player.PlayerView
+        android:id="@+id/view_player"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <tv.newtv.demo.livedemo.widget.LoadingView
+        android:id="@+id/view_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+</FrameLayout>

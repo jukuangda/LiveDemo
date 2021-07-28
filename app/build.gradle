@@ -1,0 +1,137 @@
+import com.newtv.gradle.screen.Screen
+
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+}
+
+apply plugin: Screen
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        applicationId "tv.newtv.demo.livedemo"
+        minSdkVersion 19
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+        ndk {
+            abiFilters 'armeabi'//, 'arm64-v8a', 'armeabi-v7a', 'x86_64', 'x86', 'mips', 'mips64'
+        }
+
+    }
+    dexOptions {
+        preDexLibraries = false
+    }
+    flavorDimensions "vendor"
+    signingConfigs {
+        debug {
+            storePassword "CBoxTV~123"
+            keyAlias "release.keystore"
+            keyPassword "CBoxTV~123"
+            storeFile file('../release.keystore')
+        }
+        release {
+            storePassword "CBoxTV~123"
+            keyAlias "release.keystore"
+            keyPassword "CBoxTV~123"
+            storeFile file('../release.keystore')
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
+    buildTypes {
+        release {
+//            buildBuildConfigField(release, loadBuildProperties('release'))
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            debuggable false
+        }
+        debug {
+//            buildBuildConfigField(debug, loadBuildProperties('debug'))
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+            debuggable true
+        }
+    }
+    android.applicationVariants.all { variant ->
+        renameApk(variant)
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+    androidExtensions {
+        experimental = true
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.2.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'androidx.core:core-ktx:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1"
+    // glide
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
+    //gson
+    implementation 'com.google.code.gson:gson:2.8.6'
+    // lottie
+    implementation 'com.airbnb.android:lottie:3.1.0'
+    //poi excel解析
+    implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '3.17'
+    implementation group: 'org.apache.xmlbeans', name: 'xmlbeans', version: '3.1.0'
+    implementation 'javax.xml.stream:stax-api:1.0'
+    implementation 'com.fasterxml:aalto-xml:1.2.2'
+    //rxjava
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.8'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'com.jakewharton.rxrelay2:rxrelay:2.1.1'
+}
+
+static def renameApk(variant) {
+    variant.outputs.all {
+        outputFileName = "LiveDemo-${variant.buildType.name}-v${variant.versionName}-${releaseTime()}.apk"
+    }
+}
+
+static def releaseTime() {
+    return new Date().format("yyMMdd", TimeZone.getTimeZone("GMT+8"))
+}

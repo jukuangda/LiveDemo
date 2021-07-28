@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/view_channel_list"
+        android:layout_width="@dimen/width_356px"
+        android:layout_height="match_parent"
+        android:background="@color/color_11161B_90" />
+
+    <View
+        android:layout_width="1px"
+        android:layout_height="1px"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:background="@android:color/transparent" />
+</merge>
