@@ -47,8 +47,22 @@ class AdapterChannel : RecyclerView.Adapter<AdapterChannel.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    fun getSelectPos():Int {
+    fun getSelectPos(): Int {
         return selectPos
+    }
+
+    fun playNextChannel() {
+        if (selectPos < list.size - 1) {
+            selectPos++
+            callback?.invoke(list[selectPos])
+        }
+    }
+
+    fun playPreChannel() {
+        if (selectPos > 0) {
+            selectPos--
+            callback?.invoke(list[selectPos])
+        }
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

@@ -83,6 +83,14 @@ class ChannelView @JvmOverloads constructor(
         mAdapter.setList(list)
     }
 
+    fun playNextChannel(){
+        mAdapter.playNextChannel()
+    }
+
+    fun playPreChannel(){
+        mAdapter.playPreChannel()
+    }
+
     fun refreshList() {
         mAdapter.notifyDataSetChanged()
     }

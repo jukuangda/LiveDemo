@@ -59,6 +59,24 @@ class MainActivity : AppCompatActivity(), MainContract.View, CoroutineScope by M
     }
 
     override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
+        if (event?.action == KeyEvent.ACTION_UP) {
+            if (!channelWindow.isShowing) {
+                when (event.keyCode) {
+                    KeyEvent.KEYCODE_MEDIA_PREVIOUS,
+                    KeyEvent.KEYCODE_DPAD_UP -> {
+                        //播放上一个节目
+                        channelWindow.playPreChannel()
+                        return true
+                    }
+                    KeyEvent.KEYCODE_MEDIA_NEXT,
+                    KeyEvent.KEYCODE_DPAD_DOWN -> {
+                        //播放下一个节目
+                        channelWindow.playNextChannel()
+                        return true
+                    }
+                }
+            }
+        }
         if (event?.action == KeyEvent.ACTION_DOWN && (event.keyCode == KeyEvent.KEYCODE_DPAD_CENTER || event.keyCode == KeyEvent.KEYCODE_MENU)) {
             if (!channelWindow.isShowing) {
                 channelWindow.show(viewRoot)

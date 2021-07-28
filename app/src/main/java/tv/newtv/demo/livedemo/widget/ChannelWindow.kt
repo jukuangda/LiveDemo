@@ -47,6 +47,14 @@ class ChannelWindow(
         delayDismiss()
     }
 
+    fun playNextChannel(){
+        channelView.playNextChannel()
+    }
+
+    fun playPreChannel(){
+        channelView.playPreChannel()
+    }
+
     fun refreshList() {
         channelView.refreshList()
     }
