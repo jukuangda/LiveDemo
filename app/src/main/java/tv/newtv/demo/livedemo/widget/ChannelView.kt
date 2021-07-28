@@ -26,8 +26,6 @@ class ChannelView @JvmOverloads constructor(
 
     private val mAdapter: AdapterChannel = AdapterChannel()
 
-    private var lastKeyDown = 0L
-
     init {
         LayoutInflater.from(context).inflate(R.layout.view_channel, this, true)
         with(view_channel_list) {
@@ -44,6 +42,16 @@ class ChannelView @JvmOverloads constructor(
 //                }
 //            })
         }
+    }
+
+    override fun onAttachedToWindow() {
+        (view_channel_list.layoutManager as LinearLayoutManager)
+            .scrollToPositionWithOffset(mAdapter.getSelectPos(), 0)
+        post {
+            (view_channel_list.layoutManager as LinearLayoutManager)
+                .findViewByPosition(mAdapter.getSelectPos())?.requestFocus()
+        }
+        super.onAttachedToWindow()
     }
 
     fun setOnDismissListener(listener: ChannelWindow.DismissListener) {
@@ -89,15 +97,10 @@ class ChannelView @JvmOverloads constructor(
     }
 
     override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
-        val cur = System.currentTimeMillis()
-        if (cur - lastKeyDown > 200) {
-            lastKeyDown = cur
-            if (event?.action == KeyEvent.ACTION_DOWN) {
-                dismissListener?.onCancel()
-                dismissListener?.onDelay()
-            }
-            return super.dispatchKeyEvent(event)
+        if (event?.action == KeyEvent.ACTION_DOWN) {
+            dismissListener?.onCancel()
+            dismissListener?.onDelay()
         }
-        return true
+        return super.dispatchKeyEvent(event)
     }
 }

@@ -11,6 +11,7 @@
         <item name="colorOnSecondary">@color/black</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@color/black</item>
     </style>
 
     <style name="anim_pop_left_style">

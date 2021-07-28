@@ -47,6 +47,10 @@ class AdapterChannel : RecyclerView.Adapter<AdapterChannel.ViewHolder>() {
         notifyDataSetChanged()
     }
 
+    fun getSelectPos():Int {
+        return selectPos
+    }
+
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val textProgram: TextView = itemView.findViewById(R.id.textTitle)

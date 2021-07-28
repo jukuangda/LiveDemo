@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity(), MainContract.View, CoroutineScope by M
     }
 
     override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
-        if (event?.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
+        if (event?.action == KeyEvent.ACTION_DOWN && (event.keyCode == KeyEvent.KEYCODE_DPAD_CENTER || event.keyCode == KeyEvent.KEYCODE_MENU)) {
             if (!channelWindow.isShowing) {
                 channelWindow.show(viewRoot)
             }
