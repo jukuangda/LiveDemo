@@ -218,9 +218,9 @@
 -keep class tv.newtv.ottsdk.**{*;}
 
 # POI
--dontwarn org.apache.**
--keep class org.apache.**{*;}
--dontwarn javax.xml.**
--keep class javax.xml.**{*;}
+-dontwarn org.apache.poi.**
+-keep class org.apache.poi.**{*;}
+-dontwarn javax.**
+-keep class javax.**{*;}
 -dontwarn com.fasterxml.**
 -keep class com.fasterxml.**{*;}
