@@ -8,14 +8,10 @@ import kotlinx.coroutines.cancelChildren
 
 interface IPresenter : LifecycleObserver, CoroutineScope {
 
-//    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-//    fun onCreate() {
-//    }
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    fun onCreate() {
+    }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun onDestroy() = coroutineContext.cancelChildren()
-
-    fun subscribe()
-
-    fun unsubscribe()
 }

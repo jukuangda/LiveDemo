@@ -1,10 +1,9 @@
 package tv.newtv.demo.livedemo.data.source
 
-import io.reactivex.Observable
+import kotlinx.coroutines.flow.Flow
 import tv.newtv.demo.livedemo.data.bean.ChannelBean
-import java.util.*
 
 interface DataSource {
-    suspend fun initNewTvSdk(): Int
-    fun getChannels():Observable<List<ChannelBean>>
+    suspend fun initNewTvSdk(): Flow<Int>
+    fun getChannels():Flow<List<ChannelBean>>
 }
