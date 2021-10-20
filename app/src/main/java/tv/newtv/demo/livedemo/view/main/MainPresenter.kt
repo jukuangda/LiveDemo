@@ -6,6 +6,7 @@ import kotlinx.coroutines.launch
 import tv.newtv.demo.livedemo.base.IPresenter
 import tv.newtv.demo.livedemo.data.bean.ChannelBean
 import tv.newtv.demo.livedemo.data.source.DataSource
+import tv.newtv.demo.livedemo.util.exceptionHandlingBoc
 import tv.newtv.demo.livedemo.util.next
 
 class MainPresenter(
@@ -18,22 +19,22 @@ class MainPresenter(
     override fun init() {
         launch {
             dataSource.initNewTvSdk()
-                .next {
+                .next({
                     if (it == 0) {
                         getChannels()
                     }
-                }
+                })
         }
     }
 
     override fun getChannels() {
         launch {
             dataSource.getChannels()
-                .next {
+                .next({
                     list = it
                     view.setList(it)
                     view.setPlayerInfo(it[0])
-                }
+                })
         }
     }
 }

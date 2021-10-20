@@ -104,9 +104,9 @@ class LoadingView : FrameLayout {
                             delay(1000)
                             emit(speed)
                         }
-                    }.next {
+                    }.next({
                         net_speed.text = it
-                    }
+                    })
                 }
             }
         } else {
