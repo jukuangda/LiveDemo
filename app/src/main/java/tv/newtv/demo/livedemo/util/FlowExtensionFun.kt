@@ -14,16 +14,13 @@ import java.net.UnknownHostException
 //collect异常没法呗上游catch捕获逻辑放在onEach做
 suspend fun <T> Flow<T>.next(
     bloc: suspend (value: T) -> Unit,
-    errorBlock: ((cause: Throwable) -> Unit)? = null
+    errorBlock: (suspend FlowCollector<T>.(cause: Throwable) -> Unit)? = null
 ): Unit = flowOn(Dispatchers.IO)
     .onEach(bloc)
-    .catch {
-        val handlingBoc = errorBlock ?: exceptionHandlingBoc
-        handlingBoc.invoke(it)
-    }
+    .catch(errorBlock ?: exceptionHandlingBoc)
     .collect()
 
-val exceptionHandlingBoc = fun(error: Throwable) {
+val exceptionHandlingBoc: suspend FlowCollector<Any>.(error: Throwable) -> Unit = { error ->
     if (error is ConnectException || error is UnknownHostException || error is SocketException) {
         Toast.makeText(LiveDemoApp.appContext, "网络连接异常", Toast.LENGTH_LONG).show()
     } else if (error is HttpException) {
@@ -32,6 +29,9 @@ val exceptionHandlingBoc = fun(error: Throwable) {
         Toast.makeText(LiveDemoApp.appContext, "网络请求超时", Toast.LENGTH_LONG).show()
     } else if (error is NTException) {
         Toast.makeText(LiveDemoApp.appContext, "网络异常:${error.retCode}", Toast.LENGTH_LONG)
+            .show()
+    } else if (error is LiveDemoException) {
+        Toast.makeText(LiveDemoApp.appContext, error.errorMsg, Toast.LENGTH_LONG)
             .show()
     } else {
         Toast.makeText(LiveDemoApp.appContext, "未知异常清稍后重试", Toast.LENGTH_LONG).show()

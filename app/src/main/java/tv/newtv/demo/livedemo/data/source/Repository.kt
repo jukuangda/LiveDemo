@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.flow
 import tv.newtv.demo.livedemo.LiveDemoApp
 import tv.newtv.demo.livedemo.data.bean.ChannelBean
 import tv.newtv.demo.livedemo.util.ExcelUtil
+import tv.newtv.demo.livedemo.util.LiveDemoException
 import tv.newtv.ottsdk.NewtvSdk
 
 class Repository : DataSource {
