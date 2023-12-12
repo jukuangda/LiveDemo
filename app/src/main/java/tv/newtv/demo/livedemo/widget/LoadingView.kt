@@ -5,21 +5,21 @@ import android.graphics.Color
 import android.net.TrafficStats
 import android.text.TextUtils
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
 import android.widget.FrameLayout
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.view_loading.view.*
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
 import tv.newtv.demo.livedemo.R
+import tv.newtv.demo.livedemo.util.next
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 class LoadingView : FrameLayout {
 
@@ -33,7 +33,7 @@ class LoadingView : FrameLayout {
 
     private var isShouldBreak: Boolean = false
 
-    private var mDisposableNetSpeedRefresh: Disposable? = null
+    private var mNetSpeedRefreshJob: Job? = null
 
     //毫秒转换
     private val speed: String
@@ -89,7 +89,7 @@ class LoadingView : FrameLayout {
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         stopAnim()
-        mDisposableNetSpeedRefresh?.dispose()
+        mNetSpeedRefreshJob?.cancel()
     }
 
     override fun setVisibility(visibility: Int) {
@@ -97,19 +97,20 @@ class LoadingView : FrameLayout {
         if (visibility == View.VISIBLE) {
             startAnim()
             if (net_speed.visibility == View.VISIBLE) {
-                mDisposableNetSpeedRefresh?.dispose()
-                mDisposableNetSpeedRefresh = Observable.interval(0, 1, TimeUnit.SECONDS)
-                    .map { l -> speed }
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                        { l ->
-                            net_speed.text = l
-                        },
-                        { throwable -> Log.e("获取网速异常", "" + throwable) })
+                mNetSpeedRefreshJob?.cancel()
+                mNetSpeedRefreshJob = MainScope().launch {
+                    flow {
+                        while (true) {
+                            delay(1000)
+                            emit(speed)
+                        }
+                    }.next({
+                        net_speed.text = it
+                    })
+                }
             }
         } else {
-            mDisposableNetSpeedRefresh?.dispose()
+            mNetSpeedRefreshJob?.cancel()
             stopAnim()
         }
     }

@@ -17,8 +17,8 @@ android {
         applicationId "tv.newtv.demo.livedemo"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.0.6"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         javaCompileOptions {
@@ -108,7 +108,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation "android.arch.lifecycle:extensions:1.1.1"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2"
     // glide
     implementation 'com.github.bumptech.glide:glide:4.10.0'
     //gson
@@ -120,10 +120,14 @@ dependencies {
     implementation group: 'org.apache.xmlbeans', name: 'xmlbeans', version: '3.1.0'
     implementation 'javax.xml.stream:stax-api:1.0'
     implementation 'com.fasterxml:aalto-xml:1.2.2'
-    //rxjava
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.8'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    implementation 'com.jakewharton.rxrelay2:rxrelay:2.1.1'
+    //retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.6.4'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.6.4'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.4'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.6.4'
+    //okhttp
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.6'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.6'
 }
 
 static def renameApk(variant) {

@@ -11,7 +11,7 @@ object ExcelUtil {
         val workBook =
             WorkbookFactory.create(LiveDemoApp.appContext.resources.assets.open("channels.xlsx"))
         val sheet = workBook.getSheetAt(0)
-        for (i in 1 until sheet.lastRowNum) {
+        for (i in 1 .. sheet.lastRowNum) {
             val row = sheet.getRow(i)
             val channel = ChannelBean()
             for (j in 0 until row.lastCellNum) {

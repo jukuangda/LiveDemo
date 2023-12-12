@@ -21,8 +21,9 @@ interface MainContract {
         fun dismissProgressDialog(): Int
     }
 
-    interface Presenter:IPresenter {
+    interface Presenter : IPresenter {
         fun init()
         fun getChannels()
+        fun getCntvLiveVdn(channel: ChannelBean)
     }
 }
