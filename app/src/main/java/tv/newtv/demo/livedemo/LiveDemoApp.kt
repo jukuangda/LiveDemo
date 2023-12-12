@@ -3,8 +3,12 @@ package tv.newtv.demo.livedemo
 import android.app.Activity
 import android.content.Context
 import android.media.AudioManager
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.multidex.MultiDexApplication
+import tv.newtv.demo.livedemo.util.FormatTimberTree
+import tv.newtv.demo.livedemo.util.Timber
 
 class LiveDemoApp : MultiDexApplication() {
 
@@ -22,6 +26,7 @@ class LiveDemoApp : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         INSTANCE = this
+        initLog()
         appContext = applicationContext
         registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
 
@@ -58,6 +63,19 @@ class LiveDemoApp : MultiDexApplication() {
 
             }
         })
+    }
+
+    private fun initLog() {
+        System.setProperty("kotlinx.coroutines.debug", if (BuildConfig.DEBUG) "on" else "off")
+        Timber.plant(FormatTimberTree().apply {
+            level = if (BuildConfig.DEBUG) Log.DEBUG else Log.INFO
+            printThread = BuildConfig.DEBUG
+            setTag("LiveDemo")
+        })
+        Timber.i("LiveDemo start: ${BuildConfig.VERSION_NAME}")
+        Timber.i("MANUFACTURER:${Build.MANUFACTURER}")
+        Timber.i("PRODUCT:${Build.PRODUCT}")
+        Timber.i("MODEL:${Build.MODEL}")
     }
 
     //请求音频焦点

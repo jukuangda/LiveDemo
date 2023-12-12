@@ -6,6 +6,7 @@ import kotlinx.coroutines.launch
 import tv.newtv.demo.livedemo.base.IPresenter
 import tv.newtv.demo.livedemo.data.bean.ChannelBean
 import tv.newtv.demo.livedemo.data.source.DataSource
+import tv.newtv.demo.livedemo.util.Constants
 import tv.newtv.demo.livedemo.util.exceptionHandlingBoc
 import tv.newtv.demo.livedemo.util.next
 
@@ -34,8 +35,27 @@ class MainPresenter(
                 .next({
                     list = it
                     view.setList(it)
-                    view.setPlayerInfo(it[0])
+                    getCntvLiveVdn(it[0])
                 })
+        }
+    }
+
+    override fun getCntvLiveVdn(channel: ChannelBean) {
+        launch {
+            view.showProgressDialog(1, null)
+            if (channel.type == "3") {
+                dataSource.getCntvLiveVdn(Constants.CNTV_VDN_PARAM + channel.url)
+                    .next({ vdn ->
+                        view.setPlayerInfo(channel.also {
+                            vdn.hlsUrl?.hls1?.let { hls ->
+                                channel.type = "1"
+                                channel.url = hls
+                            }
+                        })
+                    })
+            } else {
+                view.setPlayerInfo(channel)
+            }
         }
     }
 }

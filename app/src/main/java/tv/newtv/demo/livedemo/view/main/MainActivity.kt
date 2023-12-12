@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity(), MainContract.View, CoroutineScope by M
     private fun initView() {
         channelWindow.setItemClickCallback {
             //切换节目操作
-            setPlayerInfo(it)
+            presenter.getCntvLiveVdn(it)
         }
     }
 

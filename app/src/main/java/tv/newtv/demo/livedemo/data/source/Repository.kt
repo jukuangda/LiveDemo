@@ -4,8 +4,15 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import tv.newtv.demo.livedemo.LiveDemoApp
 import tv.newtv.demo.livedemo.data.bean.ChannelBean
+import tv.newtv.demo.livedemo.data.bean.CntvLiveVdn
+import tv.newtv.demo.livedemo.net.HttpClient.service
+import tv.newtv.demo.livedemo.util.Constants.CNTV_LIVE_KEY
+import tv.newtv.demo.livedemo.util.Constants.CNTV_LIVE_VERSION_CODE
+import tv.newtv.demo.livedemo.util.Constants.CNTV_V_TOKEN_POS
+import tv.newtv.demo.livedemo.util.Constants.KEY_LIVE_VDN
+import tv.newtv.demo.livedemo.util.Constants.uuid
 import tv.newtv.demo.livedemo.util.ExcelUtil
-import tv.newtv.demo.livedemo.util.LiveDemoException
+import tv.newtv.demo.livedemo.util.md5
 import tv.newtv.ottsdk.NewtvSdk
 
 class Repository : DataSource {
@@ -26,5 +33,20 @@ class Repository : DataSource {
         return flow {
             emit(ExcelUtil.getChannelsByAssets())
         }
+    }
+
+    override fun getCntvLiveVdn(p2pUrl: String): Flow<CntvLiveVdn> {
+        val tsp = System.currentTimeMillis()
+        val vc = (tsp.toString() + CNTV_LIVE_VERSION_CODE).md5()
+        return service.getCntvLiveVdn(
+            KEY_LIVE_VDN,
+            p2pUrl,
+            tsp.toString(),
+            vc,
+            uuid,
+            null,
+            vtokenUrl = null,
+            vtokenHeader = null
+        )
     }
 }
