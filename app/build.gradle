@@ -17,8 +17,8 @@ android {
         applicationId "tv.newtv.demo.livedemo"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 2
-        versionName "1.0.6"
+        versionCode 6
+        versionName "1.0.6(231212)"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         javaCompileOptions {
